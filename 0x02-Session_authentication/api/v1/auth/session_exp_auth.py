@@ -21,6 +21,7 @@ class SessionExpAuth(SessionAuth):
                 self.session_duration = int(duration)
         except Exception as e:
             self.session_duration = 0
+
     def create_session(self, user_id=None):
         '''
         a Session ID by calling super() - super() will call the
