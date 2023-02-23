@@ -20,7 +20,7 @@ def login() -> str:
         ob = User()
         user_ist = ob.search({'email': mail})
         if not user_ist or user_ist == []:
-            return jsonify({"error": "no user found for this email"}), 400
+            return jsonify({"error": "no user found for this email"}), 404
         if not user_ist[0].is_valid_password(pwd):
             return jsonify({"error": "wrong password"}), 401
 
