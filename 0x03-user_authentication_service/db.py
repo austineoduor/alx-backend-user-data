@@ -16,7 +16,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -36,8 +36,9 @@ class DB:
         '''
         if email is not None and (
                 hashed_password is not None or hashed_password != ''):
-            pwd = bcrypt.hashpw(hashed_password.encode('utf-8'), bcrypt.gensalt())
-            ed_user = User(email='email',hashed_password='pwd')
+            pwd = bcrypt.hashpw(hashed_password.encode(
+                'utf-8'), bcrypt.gensalt())
+            ed_user = User(email=email, hashed_password=pwd)
             self._session.add(ed_user)
             self._session.commit()
             return ed_user
