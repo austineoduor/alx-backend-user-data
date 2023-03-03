@@ -7,6 +7,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import Base, User
 import bcrypt
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 
 class DB:
@@ -42,3 +44,21 @@ class DB:
             self._session.add(ed_user)
             self._session.commit()
             return ed_user
+
+    def find_user_by(self, **dictionary) ->User:
+        '''
+        find users
+        '''
+        if dictionary is None:
+            raise InvalidRequestError
+        for key in dictionary.keys():
+            if not hasattr(User, key):
+                raise InvalidRequestError
+        try:
+            user = self._session.query(User).filter_by(**dictionary).first()
+        except InvalidRequestError:
+            raise InvalidRequestError
+        if user is None:
+            raise NoResultFound
+        else:
+            return user
