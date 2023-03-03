@@ -36,10 +36,12 @@ class DB:
         '''
         has two required string arguments: email and hashed_password
         '''
-        if email is not None and (
-                hashed_password is not None or hashed_password != ''):
-            pwd = bcrypt.hashpw(hashed_password.encode(
-                'utf-8'), bcrypt.gensalt())
+        if email is not None and hashed_password is not None:
+            if not isinstance(hashed_password, bytes):
+                prd = hashed_password.encode('utf-8')
+            else:
+                prd = hashed_password
+            pwd = bcrypt.hashpw(prd, bcrypt.gensalt())
             ed_user = User(email=email, hashed_password=pwd)
             self._session.add(ed_user)
             self._session.commit()
