@@ -45,7 +45,7 @@ class DB:
             self._session.commit()
             return ed_user
 
-    def find_user_by(self, **dictionary) ->User:
+    def find_user_by(self, **dictionary) -> User:
         '''
         find users
         '''
@@ -62,3 +62,18 @@ class DB:
             raise NoResultFound
         else:
             return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        The method will use find_user_by to locate the user to update,
+        then will update the user’s attributes
+        as passed in the method’s arguments
+        then commit changes to the database.
+        """
+        user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            if not hasattr(user, k):
+                raise ValueError
+            else:
+                setattr(user, k, v)
+        self._session.commit()
