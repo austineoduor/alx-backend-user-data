@@ -46,12 +46,13 @@ class Auth:
         '''
         It should expect email and password required arguments
         and return a boolean.
-        if email is not None and password is not None
         '''
-        try:
-            data = self._db.find_user_by(email=email)
-            if data:
-                if bcrypt.checkpw(password.encode(), data.hashed_password):
-                    return True
-        except NoResultFound:
-            return False
+        if email is not None and password is not None:
+            try:
+                data = self._db.find_user_by(email=email)
+                pwd = data.hashed_password
+                if data:
+                    if bcrypt.checkpw(password.encode('utf-8'), pwd):
+                        return True
+            except NoResultFound:
+                return False
