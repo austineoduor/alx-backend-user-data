@@ -52,10 +52,10 @@ class Auth:
             return user
 
     def valid_login(self, email: str, password: str) -> bool:
+        """ checks if the password is correct for the user """
         try:
             user = self._db.find_user_by(email=email)
-            if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
-                return True
+            if user:
+                return bcrypt.checkpw(password.encode(), user.hashed_password)
         except NoResultFound:
-            pass
-        return False
+            return False
