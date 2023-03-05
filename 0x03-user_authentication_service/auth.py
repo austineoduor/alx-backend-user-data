@@ -52,7 +52,7 @@ class Auth:
             return user
 
     def valid_login(self, email: str, password: str) -> bool:
-        """ 
+        """
         checks if the password is correct for the user
         """
         try:
@@ -78,6 +78,7 @@ class Auth:
                 return session_id
         except NoResultFound:
             return None
+
     def get_user_from_session_id(self, session_id: str) -> str:
         """ returns the corresponding user """
         if not session_id:

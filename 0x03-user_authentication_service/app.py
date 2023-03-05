@@ -37,9 +37,10 @@ def login():
     session_id = AUTH.create_session(email)
     if not session_id:
         abort(401)
-    result = make_response(jsonify({'email':email, 'message': 'logged in'}))
+    result = make_response(jsonify({'email': email, 'message': 'logged in'}))
     result.set_cookie('session_id', session_id)
     return result
+
 
 @app.route('/profile', methods=['GET'])
 def profile():
