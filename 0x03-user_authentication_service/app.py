@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+'''
+End-to-end integration test
+'''
 from flask import (Flask, jsonify, request, abort, make_response, redirect)
 from auth import Auth
 
