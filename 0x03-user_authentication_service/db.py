@@ -35,17 +35,19 @@ class DB:
     def add_user(self, email: str, hashed_password: str) -> User:
         '''
         has two required string arguments: email and hashed_password
-        '''
+        
         if email is not None and hashed_password is not None:
             if not isinstance(hashed_password, bytes):
                 prd = hashed_password.encode('utf-8')
             else:
                 prd = hashed_password
             pwd = bcrypt.hashpw(prd, bcrypt.gensalt())
-            ed_user = User(email=email, hashed_password=pwd)
-            self._session.add(ed_user)
-            self._session.commit()
-            return ed_user
+        '''
+        pwd = hashed_password
+        ed_user = User(email=email, hashed_password=pwd)
+        self._session.add(ed_user)
+        self._session.commit()
+        return ed_user
 
     def find_user_by(self, **dictionary) -> User:
         '''
