@@ -20,6 +20,9 @@ def playload():
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
 def registor():
+    '''
+    register user
+    '''
     email = request.form.get('email')
     pwd = request.form.get('password')
     try:
